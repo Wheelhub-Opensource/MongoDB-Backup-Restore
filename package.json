@@ -1,10 +1,16 @@
 {
   "name": "mongodb-backup-restore",
-  "version": "0.0.1",
+  "version": "0.0.24",
   "description": "Backup and restore MongoDB databases",
   "engine": {
     "node": "^8.1"
   },
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/Wheelhub-Opensource/MongoDB-Backup-Restore.git"
+  },
+  "keywords": ["mongodb", "backup", "restore", "migration"],
+  "homepage": "https://wheelhub.es",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
