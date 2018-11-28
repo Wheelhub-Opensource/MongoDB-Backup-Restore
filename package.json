@@ -1,6 +1,6 @@
 {
   "name": "mongodb-backup-restore",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Backup and restore MongoDB databases",
   "engine": {
     "node": "^8.1"
