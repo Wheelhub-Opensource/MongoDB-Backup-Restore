@@ -6,10 +6,15 @@
     "node": "^8.1"
   },
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/Wheelhub-Opensource/MongoDB-Backup-Restore.git"
+    "type": "git",
+    "url": "https://github.com/Wheelhub-Opensource/MongoDB-Backup-Restore.git"
   },
-  "keywords": ["mongodb", "backup", "restore", "migration"],
+  "keywords": [
+    "mongodb",
+    "backup",
+    "restore",
+    "migration"
+  ],
   "homepage": "https://wheelhub.es",
   "main": "index.js",
   "scripts": {
@@ -19,6 +24,7 @@
   "author": "Wheelhub",
   "license": "AGPL-3.0",
   "dependencies": {
+    "ajv": "^6.5.5",
     "mongodb-backup": "^1.6.9",
     "mongodb-restore": "^1.6.2"
   }
