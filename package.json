@@ -1,6 +1,6 @@
 {
   "name": "mongodb-backup-restore",
-  "version": "0.0.24",
+  "version": "0.1.0",
   "description": "Backup and restore MongoDB databases",
   "engine": {
     "node": "^8.1"
@@ -13,7 +13,7 @@
   "homepage": "https://wheelhub.es",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node start.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Wheelhub",

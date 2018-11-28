@@ -1,10 +1,31 @@
 const lib_mongoDBBackup  = require('mongodb-backup');
 const lib_mongoDBRestore = require('mongodb-restore');
+const lib_ajv            = require('ajv');
 
-const globalConfig      = require('./config.json');
+const globalConfigSchema = require('./config-schema.json');
 
 class App {
-  constructor() { }
+  constructor(globalConfig) {
+    if(!globalConfig) { throw new Error('A config must be passed to constructor'); }
+
+    let ajv = new lib_ajv();
+    ajv.addSchema(globalConfigSchema, 'configSchema');
+    let isValid = ajv.validate('configSchema', globalConfig);
+
+    if(!isValid) {
+      throw new Error(ajv.errorsText());
+    }
+    
+    this.globalConfig = globalConfig;
+
+    this.checkConfig();
+  }
+
+  checkConfig() {
+    if(this.globalConfig.origin.url.trim() === this.globalConfig.target.url.trim() && this.globalConfig.target.dbNameAppend.trim() === '') {
+      throw new Error('When origin and target URLs are the same, a name must be appended to target DBs');
+    }
+  }
 
   async processBackup(config) {
     if(!config.databases || config.databases.length === 0) {
@@ -43,7 +64,7 @@ class App {
       let dbName = databases[key];
   
       try {
-        await this.restore(config.url, dbName, config.dbNameAppend);
+        await this.restore(config.url, dbName, config.dbNameAppend.trim());
         console.log('Database "' + dbName + '" restored');
       } catch(err) {
         console.log('Error', err);
@@ -67,7 +88,7 @@ class App {
 
       lib_mongoDBBackup({
         uri      : url + '/' + dbName,
-        root     : './database/' + globalConfig.projectName,
+        root     : './database/' + this.globalConfig.projectName,
         logger   : './log', // Doesn't seem to work :(
         options  : { ssl : true, authSource : 'admin' },
         tar      : dbName + '.tar',
@@ -87,7 +108,7 @@ class App {
 
       lib_mongoDBRestore({
         uri      : url + '/' + dbName + appendName,
-        root     : './database/' + globalConfig.projectName,
+        root     : './database/' + this.globalConfig.projectName,
         tar      : dbName + '.tar',
         logger   : './log', // Doesn't seem to work :(
         options  : { ssl : true, authSource : 'admin' },
@@ -100,16 +121,16 @@ class App {
   }
 }
 
-(async () => {
-  let AppInstance = new App();
+module.exports = (async (globalConfig) => {
+  let AppInstance = new App(globalConfig);
 
-  if(globalConfig.doBackup) {
-    await AppInstance.processBackup(globalConfig.origin);
+  if(AppInstance.globalConfig.doBackup) {
+    await AppInstance.processBackup(AppInstance.globalConfig.origin);
   }
 
-  if(globalConfig.doRestore) {
-    await AppInstance.processRestore(globalConfig.target, globalConfig.origin.databases);
+  if(AppInstance.globalConfig.doRestore) {
+    await AppInstance.processRestore(AppInstance.globalConfig.target, AppInstance.globalConfig.origin.databases);
   }
 
-  console.log("--- Process finished ---");
-})();
+  console.log("--- Process finished ---\n");
+});
