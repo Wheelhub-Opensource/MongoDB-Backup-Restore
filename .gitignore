@@ -1,2 +1,4 @@
 database/*
 !database/.keep
+*.log
+dump/*

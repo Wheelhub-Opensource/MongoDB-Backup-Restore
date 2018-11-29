@@ -25,12 +25,17 @@
       "type": "object",
       "required": [
         "url",
+        "mongodbOptions",
         "databases"
       ],
       "properties": {
         "url": {
           "type": "string",
-          "description": "The MongoDB url to point to. Format: mongodb://user:password@shard-hostname.com:27017"
+          "description": "The MongoDB url to point to. Format: mongodb://user:password@hostname.com:27017"
+        },
+        "mongodbOptions": {
+          "type": "object",
+          "description": "Options to be passed to MongoDB client. Check MongoDB docs for more info"
         },
         "databases": {
           "type": "array",
@@ -45,6 +50,7 @@
       "type": "object",
       "required": [
         "url",
+        "mongodbOptions",
         "useOriginDatabases",
         "databases",
         "dbNameAppend"
@@ -52,7 +58,11 @@
       "properties": {
         "url": {
           "type": "string",
-          "description": "The MongoDB url to point to. Format: mongodb://user:password@shard-hostname.com:27017"
+          "description": "The MongoDB url to point to. Format: mongodb://user:password@hostname.com:27017"
+        },
+        "mongodbOptions": {
+          "type": "object",
+          "description": "Options to be passed to MongoDB client. Check MongoDB docs for more info"
         },
         "useOriginDatabases": {
           "type": "boolean",

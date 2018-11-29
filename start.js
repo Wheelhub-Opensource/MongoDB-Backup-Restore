@@ -4,15 +4,22 @@ const libMongodbBackupRestore = require('./index');
 
   let config = {
     projectName: 'MyProject',
-    doBackup: false,
-    doRestore: false,
+    doBackup: true,
+    doRestore: true,
     origin: {
-      url: '',
-      databases: []
+      url: 'mongodb://user:password@hostname.com:27017',
+      databases: [],
+      mongodbOptions: {
+        ssl: true,
+        authSource: 'admin'
+      }
     },
     target: {
-      url: '',
-      useOriginDatabases: false,
+      url: 'mongodb://localhost:27017',
+      mongodbOptions: {
+        ssl: false
+      },
+      useOriginDatabases: true,
       databases: [],
       dbNameAppend: 'Copy'
     }
@@ -20,6 +27,7 @@ const libMongodbBackupRestore = require('./index');
   try {
     await libMongodbBackupRestore(config); 
   } catch(err) {
+    console.log(err);
     console.log(`--- Error: ${err.message} ---\n`);
   }
 })();

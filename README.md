@@ -45,7 +45,7 @@ The package constructor requires a JSON object with the proper params in order t
       "properties": {
         "url": {
           "type": "string",
-          "description": "The MongoDB url to point to. Format: mongodb://user:password@shard-hostname.com:27017"
+          "description": "The MongoDB url to point to. Format: mongodb://user:password@hostname.com:27017"
         },
         "databases": {
           "type": "array",
@@ -67,7 +67,7 @@ The package constructor requires a JSON object with the proper params in order t
       "properties": {
         "url": {
           "type": "string",
-          "description": "The MongoDB url to point to. Format: mongodb://user:password@shard-hostname.com:27017"
+          "description": "The MongoDB url to point to. Format: mongodb://user:password@hostname.com:27017"
         },
         "useOriginDatabases": {
           "type": "boolean",
@@ -93,18 +93,25 @@ The package constructor requires a JSON object with the proper params in order t
 #### Example config
 ```js
 {
-  projectName : 'MyProject',
-  doBackup    : true,
-  doRestore   : true,
-  origin      : {
-    url       : 'mongodb://user:password@shard-hostname-1.com:27017',
-    databases : ['myDatabase']
+  projectName: 'MyProject',
+  doBackup: true,
+  doRestore: true,
+  origin: {
+    url: 'mongodb://user:password@hostname.com:27017',
+    databases: [],
+    mongodbOptions: {
+      ssl: true,
+      authSource: 'admin'
+    }
   },
-  target      : {
-    url                : 'mongodb://user:password@shard-hostname-2.com:27017',
-    databases          : ['myDatabase']
-    useOriginDatabases : false,
-    dbNameAppend       : 'Copy'
+  target: {
+    url: 'mongodb://localhost:27017',
+    mongodbOptions: {
+      ssl: false
+    },
+    useOriginDatabases: true,
+    databases: [],
+    dbNameAppend: 'Copy'
   }
 };
 ```
@@ -118,18 +125,25 @@ const libMongodbBackupRestore = require('mongodb-backup-restore');
 (async () => {
 
   let config = {
-    projectName : 'MyProject',
-    doBackup    : true,
-    doRestore   : true,
-    origin      : {
-      url       : 'mongodb://user:password@shard-hostname-1.com:27017',
-      databases : ['myDatabase']
+    projectName: 'MyProject',
+    doBackup: true,
+    doRestore: true,
+    origin: {
+      url: 'mongodb://user:password@hostname.com:27017',
+      databases: [],
+      mongodbOptions: {
+        ssl: true,
+        authSource: 'admin'
+      }
     },
-    target      : {
-      url                : 'mongodb://user:password@shard-hostname-2.com:27017',
-      databases          : ['myDatabase']
-      useOriginDatabases : false,
-      dbNameAppend       : 'Copy'
+    target: {
+      url: 'mongodb://localhost:27017',
+      mongodbOptions: {
+        ssl: false
+      },
+      useOriginDatabases: true,
+      databases: [],
+      dbNameAppend: 'Copy'
     }
   };
   try {

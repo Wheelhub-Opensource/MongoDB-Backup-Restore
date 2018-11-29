@@ -25,7 +25,6 @@
   "license": "ISC",
   "dependencies": {
     "ajv": "^6.5.5",
-    "mongodb-backup": "^1.6.9",
     "mongodb-restore": "^1.6.2"
   }
 }
