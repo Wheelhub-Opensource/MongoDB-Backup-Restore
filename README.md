@@ -97,14 +97,13 @@ The package constructor requires a JSON object with the proper params in order t
   doBackup    : true,
   doRestore   : true,
   origin      : {
-    url: 'mongodb://user:password@shard-hostname-1.com:27017',
+    url       : 'mongodb://user:password@shard-hostname-1.com:27017',
     databases : ['myDatabase']
   },
   target      : {
-    url: 'mongodb://user:password@shard-hostname-2.com:27017',
-    databases : ['myDatabase']
+    url                : 'mongodb://user:password@shard-hostname-2.com:27017',
+    databases          : ['myDatabase']
     useOriginDatabases : false,
-    databases          : [],
     dbNameAppend       : 'Copy'
   }
 };
@@ -123,14 +122,13 @@ const libMongodbBackupRestore = require('mongodb-backup-restore');
     doBackup    : true,
     doRestore   : true,
     origin      : {
-      url: 'mongodb://user:password@shard-hostname-1.com:27017',
+      url       : 'mongodb://user:password@shard-hostname-1.com:27017',
       databases : ['myDatabase']
     },
     target      : {
-      url: 'mongodb://user:password@shard-hostname-2.com:27017',
-      databases : ['myDatabase']
+      url                : 'mongodb://user:password@shard-hostname-2.com:27017',
+      databases          : ['myDatabase']
       useOriginDatabases : false,
-      databases          : [],
       dbNameAppend       : 'Copy'
     }
   };
